@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-
+// задание 1
 public class test {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -10,7 +10,7 @@ public class test {
 
     }
 }
-
+// задание 2
 class RockPaperScissors {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
