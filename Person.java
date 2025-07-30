@@ -5,33 +5,70 @@ public class Person {
     private String name;
     private double money;
     private List<Product> products;
-    public Person (String name, double money){
+
+    public Person(String name, double money) {
         setName(name);
         setMoney(money);
         this.products = new ArrayList<>();
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    public void setName (String name){
-        if (name ==null || name.isEmpty()){
+
+    public void setName(String name) {
+        if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Имя не может быть пустым");
         }
-        if (name.length()<3){
+        if (name.length() < 3) {
             throw new IllegalArgumentException("Имя не может быть короче 3 символов");
         }
-        this.name=name;
+        this.name = name;
     }
-    public double getMoney (){
+
+    public double getMoney() {
         return money;
     }
-    public void setMoney(double money){
-        if (money<0){
+
+    public void setMoney(double money) {
+        if (money < 0) {
             throw new IllegalArgumentException("Деньги не могут быть отрицательными");
         }
-        this.money=money;
+        this.money = money;
     }
-    public void addProduct (Product product){
 
+    public void addProduct(Product product) {
+        if (product.getPrice() <= money) {
+            products.add(product);
+            money -= product.getPrice();
+        } else {
+            System.out.println(name + "не может позволить себе" + product.getName());
+
+        }
+    }
+    @Override
+    public String toString(){
+        StringBilder sb = new StringBilder();
+        sb.append(name).append("-");
+        if (products.isEmpty()){
+            sb.append("Ничего не куплено");
+        }else {
+            for (Product product : products){
+                sb.append(product.getName()).append(",");
+            }
+             sb.setLength(sb.Length()-2);
+        }
+        return sb.toString();
+    }
+    @Override
+    public boolean equals (Object o){
+        if (this == 0) return true;
+        if (o == null || getClass()! = o.getClass()) return false;
+        Person person = (Person) o;
+        return Double.compare(name, person.products);
+    }
+    @Override
+    public int hashCode(){
+        return Object.hash(name,money,products);
     }
 }
