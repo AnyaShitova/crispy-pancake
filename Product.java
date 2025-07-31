@@ -32,12 +32,12 @@ public class Product {
     }
 
     @Override
-    public String toString(Object o) {
+    public String toString() {
         return name + "(" + price + "руб.)";
     }
 
     @Override
-    public boolean equlas(Object o) {
+    public boolean equals (Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
