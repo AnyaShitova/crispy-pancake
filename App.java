@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,14 +17,19 @@ public class App {
             }
             try {
                 String[] parts = input.split(" ");
-                String name = parts[0];
-                double money = Double.parseDouble(parts[1]);
+                if (parts.length<2){
+                    System.out.println("Некорректный формат ввода. Используйте 'Имя Сумма денег'.");
+                    continue;
+                }
+                String name = String.join(" ", Arrays.copyOfRange(parts, 0, parts.length - 1));
+                double money = Double.parseDouble(parts[parts.length-1]);
+
                 Person person = new Person(name, money);
                 people.add(person);
+            } catch (NumberFormatException  e) {
+                System.out.println("Ошибка: Некорректное значение суммы денег.");
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("Некорректный формат ввода. Используйте 'Имя Сумма денег'.");
             }
         }
         // ввод продуктов
@@ -35,14 +41,18 @@ public class App {
             }
             try {
                 String[] parts = input.split(" ");
-                String name = parts[0];
-                double price = Double.parseDouble(parts[1]);
+                if (parts.length < 2){
+                System.out.println("Некорректный формат ввода. Используйте 'Название Стоимость'.");
+                continue;
+                }
+                String name = String.join(" ", Arrays.copyOfRange(parts, 0, parts.length - 1));;
+                double price = Double.parseDouble(parts[parts.length-1]);
                 Product product = new Product(name, price);
                 products.add(product);
+            } catch (NumberFormatException e) {
+                System.out.println("Некорректный формат ввода. Используйте 'Название Стоимость'.");
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("Некорректный формат ввода. Используйте 'Название Стоимость'.");
             }
         }
         // выбор продуктов
