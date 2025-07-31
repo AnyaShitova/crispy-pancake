@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,7 +8,7 @@ public class App {
         List<Person> people = new ArrayList<>();
         List<Product> products = new ArrayList<>();
         // ввод покупателей
-        System.out.println("Введите покупателей в формате 'Имя Сумма денег' (для завершения введите END):");
+        System.out.println("Введите покупателей в формате 'Имя=Сумма денег' (для завершения введите END):");
         while (true) {
             String input = scanner.nextLine();
             if (input.equalsIgnoreCase("END")) {
@@ -18,7 +17,7 @@ public class App {
             try {
                 String[] parts = input.split("=");
                 if (parts.length < 2) {
-                    System.out.println("Некорректный формат ввода. Используйте 'Имя Сумма денег'.");
+                    System.out.println("Некорректный формат ввода. Используйте 'Имя=Сумма денег'.");
                     continue;
                 }
                 // Имя покупателя — это первая часть строки
@@ -35,7 +34,7 @@ public class App {
             }
         }
         // ввод продуктов
-        System.out.println("Введите продукты в формате 'Название Стоимость' (для завершения введите END):");
+        System.out.println("Введите продукты в формате 'Название=Стоимость' (для завершения введите END):");
         while (true) {
             String input = scanner.nextLine();
             if (input.equalsIgnoreCase("END")) {
@@ -44,7 +43,7 @@ public class App {
             try {
                 String[] parts = input.split("=");
                 if (parts.length < 2) {
-                    System.out.println("Некорректный формат ввода. Используйте 'Название Стоимость'.");
+                    System.out.println("Некорректный формат ввода. Используйте 'Название=Стоимость'.");
                     continue;
                 }
 
@@ -53,8 +52,8 @@ public class App {
 
                 Product product = new Product(name, price);
                 products.add(product);
-            } catch (NumberFormatException e) {
-                System.out.println("Некорректный формат ввода. Используйте 'Название Стоимость'.");
+            }  catch (NumberFormatException e) {
+                System.out.println("Ошибка: Некорректное значение стоимости продукта.");
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
@@ -69,7 +68,7 @@ public class App {
             try {
                 String[] parts = input.split("-");
                 if (parts.length < 2) {
-                    System.out.println("Некорректный формат ввода. Используйте 'Название Стоимость'.");
+                    System.out.println("Некорректный формат ввода. Используйте 'Название-Стоимость'.");
                     continue;
                 }
                 // Имя покупателя — первая часть строки
@@ -99,8 +98,8 @@ public class App {
                     continue;
                 }
                 person.addProduct(product);
-            } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("Некорректный формат ввода. Используйте 'Имя покупателя Название продукта'.");
+            } catch (NumberFormatException e) {
+                System.out.println("Ошибка: Некорректный формат ввода.");;
             }
         }
         System.out.println("\nРезультаты:");
