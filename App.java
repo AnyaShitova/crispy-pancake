@@ -17,16 +17,17 @@ public class App {
             }
             try {
                 String[] parts = input.split(" ");
-                if (parts.length<2){
+                if (parts.length < 2) {
                     System.out.println("Некорректный формат ввода. Используйте 'Имя Сумма денег'.");
                     continue;
                 }
+                // Имя покупателя — это все слова, кроме последнего
                 String name = String.join(" ", Arrays.copyOfRange(parts, 0, parts.length - 1));
-                double money = Double.parseDouble(parts[parts.length-1]);
+                double money = Double.parseDouble(parts[parts.length - 1]);
 
                 Person person = new Person(name, money);
                 people.add(person);
-            } catch (NumberFormatException  e) {
+            } catch (NumberFormatException e) {
                 System.out.println("Ошибка: Некорректное значение суммы денег.");
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
@@ -41,12 +42,13 @@ public class App {
             }
             try {
                 String[] parts = input.split(" ");
-                if (parts.length < 2){
-                System.out.println("Некорректный формат ввода. Используйте 'Название Стоимость'.");
-                continue;
+                if (parts.length < 2) {
+                    System.out.println("Некорректный формат ввода. Используйте 'Название Стоимость'.");
+                    continue;
                 }
-                String name = String.join(" ", Arrays.copyOfRange(parts, 0, parts.length - 1));;
-                double price = Double.parseDouble(parts[parts.length-1]);
+                // Название продукта — это все слова, кроме последнего
+                String name = String.join(" ", Arrays.copyOfRange(parts, 0, parts.length - 1));
+                double price = Double.parseDouble(parts[parts.length - 1]);
                 Product product = new Product(name, price);
                 products.add(product);
             } catch (NumberFormatException e) {
@@ -64,12 +66,13 @@ public class App {
             }
             try {
                 String[] parts = input.split(" ");
-                if (parts.length < 2){
+                if (parts.length < 2) {
                     System.out.println("Некорректный формат ввода. Используйте 'Название Стоимость'.");
                     continue;
                 }
-                String personName = String.join(" ", Arrays.copyOfRange(parts, 0, parts.length - 1));;
-                String productName = (parts[parts.length-1]);
+                // Имя покупателя — это все слова, кроме последнего
+                String personName = String.join(" ", Arrays.copyOfRange(parts, 0, parts.length - 1));
+                String productName = parts[parts.length - 1];
                 Person person = null;
                 for (Person p : people) {
                     if (p.getName().equals(personName)) {
@@ -93,12 +96,12 @@ public class App {
                     continue;
                 }
                 person.addProduct(product);
-            } catch (ArrayIndexOutOfBoundsException e){
+            } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("Некорректный формат ввода. Используйте 'Имя покупателя Название продукта'.");
             }
         }
         System.out.println("\nРезультаты:");
-        for (Person person : people){
+        for (Person person : people) {
             System.out.println(person);
         }
     }
