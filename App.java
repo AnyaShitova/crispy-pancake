@@ -58,21 +58,22 @@ public class App {
             }
         }
         // выбор продуктов
-        System.out.println("Введите покупки в формате 'Имя покупателя Название продукта' (для завершения введите END):");
+        System.out.println("Введите покупки в формате 'Имя покупателя-Название продукта' (для завершения введите END):");
         while (true) {
             String input = scanner.nextLine();
             if (input.equalsIgnoreCase("END")) {
                 break;
             }
             try {
-                String[] parts = input.split(" ");
+                String[] parts = input.split("-");
                 if (parts.length < 2) {
                     System.out.println("Некорректный формат ввода. Используйте 'Название Стоимость'.");
                     continue;
                 }
-                // Имя покупателя — это все слова, кроме последнего
-                String personName = String.join(" ", Arrays.copyOfRange(parts, 0, parts.length - 1));
-                String productName = parts[parts.length - 1];
+                // Имя покупателя — первая часть строки
+                String personName = parts[0].trim();
+                // Название продукта — вторая часть строки
+                String productName = parts[1].trim();
                 Person person = null;
                 for (Person p : people) {
                     if (p.getName().equals(personName)) {
