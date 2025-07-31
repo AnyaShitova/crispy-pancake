@@ -64,8 +64,12 @@ public class App {
             }
             try {
                 String[] parts = input.split(" ");
-                String personName = parts[0];
-                String productName = parts[1];
+                if (parts.length < 2){
+                    System.out.println("Некорректный формат ввода. Используйте 'Название Стоимость'.");
+                    continue;
+                }
+                String personName = String.join(" ", Arrays.copyOfRange(parts, 0, parts.length - 1));;
+                String productName = (parts[parts.length-1]);
                 Person person = null;
                 for (Person p : people) {
                     if (p.getName().equals(personName)) {
