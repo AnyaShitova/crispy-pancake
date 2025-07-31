@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Person {
     private String name;
@@ -48,7 +49,7 @@ public class Person {
     }
     @Override
     public String toString(){
-        StringBilder sb = new StringBilder();
+        StringBuilder sb = new StringBuilder();
         sb.append(name).append("-");
         if (products.isEmpty()){
             sb.append("Ничего не куплено");
@@ -56,19 +57,21 @@ public class Person {
             for (Product product : products){
                 sb.append(product.getName()).append(",");
             }
-             sb.setLength(sb.Length()-2);
+             sb.setLength(sb.length()-2);
         }
         return sb.toString();
     }
     @Override
     public boolean equals (Object o){
-        if (this == 0) return true;
-        if (o == null || getClass()! = o.getClass()) return false;
+        if (this == o) return true;
+        if (o== null||getClass()!=o.getClass()) return false;
         Person person = (Person) o;
-        return Double.compare(name, person.products);
+        return Double.compare(person.money, money)==0 &&
+                Objects.equals(name, person.name) &&
+                Objects.equals(products,person.products);
     }
     @Override
     public int hashCode(){
-        return Object.hash(name,money,products);
+        return Objects.hash(name,money,products);
     }
 }
