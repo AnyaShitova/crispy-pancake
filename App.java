@@ -16,14 +16,15 @@ public class App {
                 break;
             }
             try {
-                String[] parts = input.split(" ");
+                String[] parts = input.split("=");
                 if (parts.length < 2) {
                     System.out.println("Некорректный формат ввода. Используйте 'Имя Сумма денег'.");
                     continue;
                 }
-                // Имя покупателя — это все слова, кроме последнего
-                String name = String.join(" ", Arrays.copyOfRange(parts, 0, parts.length - 1));
-                double money = Double.parseDouble(parts[parts.length - 1]);
+                // Имя покупателя — это первая часть строки
+                String name = parts[0].trim();
+                // Сумма денег — это вторая часть строки
+                double money = Double.parseDouble(parts[1].trim());
 
                 Person person = new Person(name, money);
                 people.add(person);
@@ -41,14 +42,15 @@ public class App {
                 break;
             }
             try {
-                String[] parts = input.split(" ");
+                String[] parts = input.split("=");
                 if (parts.length < 2) {
                     System.out.println("Некорректный формат ввода. Используйте 'Название Стоимость'.");
                     continue;
                 }
-                // Название продукта — это все слова, кроме последнего
-                String name = String.join(" ", Arrays.copyOfRange(parts, 0, parts.length - 1));
-                double price = Double.parseDouble(parts[parts.length - 1]);
+
+                String name = parts[0].trim();
+                double price = Double.parseDouble(parts[1].trim());
+
                 Product product = new Product(name, price);
                 products.add(product);
             } catch (NumberFormatException e) {
