@@ -7,6 +7,7 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         List<Person> people = new ArrayList<>();
         List<Product> products = new ArrayList<>();
+        List<String> purchaseMessages = new ArrayList<>();
         // ввод покупателей
         System.out.println("Введите покупателей в формате 'Имя=Сумма денег' (для завершения введите END):");
         while (true) {
@@ -97,14 +98,20 @@ public class App {
                     System.out.println("Продукт '" + productName + "' не найден.");
                     continue;
                 }
-                person.addProduct(product);
+                if (person.addProduct(product)){
+                    purchaseMessages.add(person.getName() + " купил " + product.getName());
+                }else {
+                    purchaseMessages.add(person.getName() + " не может позволить себе " + product.getName());
+                }
             } catch (NumberFormatException e) {
                 System.out.println("Ошибка: Некорректный формат ввода.");;
             }
         }
         System.out.println("\nРезультаты:");
-        for (Person person : people) {
-            System.out.println(person);
+        for (String message : purchaseMessages) {
+            System.out.println(message);
         }
+        for (Person person : people) {
+            System.out.println(person);}
     }
 }

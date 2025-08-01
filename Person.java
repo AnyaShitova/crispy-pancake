@@ -38,12 +38,13 @@ public class Person {
         this.money = money;
     }
 
-    public void addProduct(Product product) {
+    public boolean addProduct(Product product) {
         if (product.getPrice() <= money) {
             products.add(product);
             money -= product.getPrice();
+            return true;
         } else {
-            System.out.println(name + "не может позволить себе" + product.getName());
+            return false;
 
         }
     }
