@@ -58,7 +58,7 @@ public class Person {
             for (Product product : products){
                 sb.append(product.getName()).append(",");
             }
-             sb.setLength(sb.length()-2);
+             sb.setLength(sb.length()-1);
         }
         return sb.toString();
     }
