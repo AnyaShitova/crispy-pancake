@@ -99,12 +99,12 @@ public class App {
                     continue;
                 }
                 if (person.addProduct(product)){
-                    purchaseMessages.add(person.getName() + " купил " + product.getName());
+                    purchaseMessages.add(person.getName() + " купил " + product.getName() +" ");
                 }else {
-                    purchaseMessages.add(person.getName() + " не может позволить себе " + product.getName());
+                    purchaseMessages.add(person.getName() + " не может позволить себе " + product.getName() +" ");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Ошибка: Некорректный формат ввода.");;
+                System.out.println("Ошибка: Некорректный формат ввода.");
             }
         }
         System.out.println("\nРезультаты:");
