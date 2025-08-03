@@ -25,6 +25,14 @@ public class App {
                 String name = parts[0].trim();
                 // Сумма денег — это вторая часть строки
                 double money = Double.parseDouble(parts[1].trim());
+                if (money < 0) {
+                    System.out.println("Ошибка: Сумма денег не может быть отрицательной. Пожалуйста, введите корректные данные.");
+                    continue;
+                }
+                if (name.length() < 3) {
+                    System.out.println("Ошибка: Имя покупателя должно содержать не менее 3 символов. Пожалуйста, введите корректные данные.");
+                    continue;
+                }
 
                 Person person = new Person(name, money);
                 people.add(person);
