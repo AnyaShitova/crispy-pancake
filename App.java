@@ -73,7 +73,6 @@ public class App {
         }
 
         // Выбор продуктов
-        // Выбор продуктов
         System.out.println("Введите покупки в формате 'Имя покупателя Название продукта' (для завершения введите END):");
         while (true) {
             String input = scanner.nextLine();
@@ -81,42 +80,44 @@ public class App {
                 break;
             }
             try {
-                int lastSpaceIndex = input.lastIndexOf(" ");
-                if (lastSpaceIndex == -1) {
-                    System.out.println("Некорректный формат ввода. Используйте 'Имя покупателя Название продукта'.");
-                    continue;
-                }
-                String personName = input.substring(0, lastSpaceIndex).trim();
-                String productName = input.substring(lastSpaceIndex + 1).trim();
+                // Используем регулярное выражение для разделения строки
+                Pattern pattern = Pattern.compile("(.+)\\s(.+)");
+                Matcher matcher = pattern.matcher(input);
+                if (matcher.matches()) {
+                    String personName = matcher.group(1).trim();
+                    String productName = matcher.group(2).trim();
 
-                Person person = null;
-                for (Person p : people) {
-                    if (p.getName().equals(personName)) {
-                        person = p;
-                        break;
+                    Person person = null;
+                    for (Person p : people) {
+                        if (p.getName().equals(personName)) {
+                            person = p;
+                            break;
+                        }
                     }
-                }
-                if (person == null) {
-                    System.out.println("Покупатель '" + personName + "' не найден.");
-                    continue;
-                }
-
-                Product product = null;
-                for (Product p : products) {
-                    if (p.getName().equals(productName)) {
-                        product = p;
-                        break;
+                    if (person == null) {
+                        System.out.println("Покупатель '" + personName + "' не найден.");
+                        continue;
                     }
-                }
-                if (product == null) {
-                    System.out.println("Продукт '" + productName + "' не найден.");
-                    continue;
-                }
 
-                if (person.addProduct(product)) {
-                    purchaseMessages.add(person.getName() + " купил " + product.getName() + " ");
+                    Product product = null;
+                    for (Product p : products) {
+                        if (p.getName().equals(productName)) {
+                            product = p;
+                            break;
+                        }
+                    }
+                    if (product == null) {
+                        System.out.println("Продукт '" + productName + "' не найден.");
+                        continue;
+                    }
+
+                    if (person.addProduct(product)) {
+                        purchaseMessages.add(person.getName() + " купил " + product.getName() + " ");
+                    } else {
+                        purchaseMessages.add(person.getName() + " не может позволить себе " + product.getName() + " ");
+                    }
                 } else {
-                    purchaseMessages.add(person.getName() + " не может позволить себе " + product.getName() + " ");
+                    System.out.println("Некорректный формат ввода. Используйте 'Имя покупателя Название продукта'.");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Ошибка: Некорректный формат ввода.");
