@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class App {
     public static void main(String[] args) {
@@ -8,7 +10,8 @@ public class App {
         List<Person> people = new ArrayList<>();
         List<Product> products = new ArrayList<>();
         List<String> purchaseMessages = new ArrayList<>();
-        // ввод покупателей
+
+        // Ввод покупателей
         System.out.println("Введите покупателей в формате 'Имя=Сумма денег' (для завершения введите END):");
         while (true) {
             String input = scanner.nextLine();
@@ -42,7 +45,8 @@ public class App {
                 System.out.println(e.getMessage());
             }
         }
-        // ввод продуктов
+
+        // Ввод продуктов
         System.out.println("Введите продукты в формате 'Название=Стоимость' (для завершения введите END):");
         while (true) {
             String input = scanner.nextLine();
@@ -61,65 +65,71 @@ public class App {
 
                 Product product = new Product(name, price);
                 products.add(product);
-            }  catch (NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 System.out.println("Ошибка: Некорректное значение стоимости продукта.");
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
-        // выбор продуктов
-        System.out.println("Введите покупки в формате 'Имя покупателя-Название продукта' (для завершения введите END):");
+
+        // Выбор продуктов
+        System.out.println("Введите покупки в формате 'Имя покупателя Название продукта' (для завершения введите END):");
         while (true) {
             String input = scanner.nextLine();
             if (input.equalsIgnoreCase("END")) {
                 break;
             }
             try {
-                String[] parts = input.split("-");
-                if (parts.length < 2) {
-                    System.out.println("Некорректный формат ввода. Используйте 'Название-Стоимость'.");
-                    continue;
-                }
-                // Имя покупателя — первая часть строки
-                String personName = parts[0].trim();
-                // Название продукта — вторая часть строки
-                String productName = parts[1].trim();
-                Person person = null;
-                for (Person p : people) {
-                    if (p.getName().equals(personName)) {
-                        person = p;
-                        break;
+                Pattern pattern = Pattern.compile("(.+)\\s(.+)");
+                Matcher matcher = pattern.matcher(input);
+                if (matcher.matches()) {
+                    String personName = matcher.group(1).trim();
+                    String productName = matcher.group(2).trim();
+
+                    Person person = null;
+                    for (Person p : people) {
+                        if (p.getName().equals(personName)) {
+                            person = p;
+                            break;
+                        }
                     }
-                }
-                if (person == null) {
-                    System.out.println("Покупатель '" + personName + "' не найден.");
-                    continue;
-                }
-                Product product = null;
-                for (Product p : products) {
-                    if (p.getName().equals(productName)) {
-                        product = p;
-                        break;
+                    if (person == null) {
+                        System.out.println("Покупатель '" + personName + "' не найден.");
+                        continue;
                     }
-                }
-                if (product == null) {
-                    System.out.println("Продукт '" + productName + "' не найден.");
-                    continue;
-                }
-                if (person.addProduct(product)){
-                    purchaseMessages.add(person.getName() + " купил " + product.getName() +" ");
-                }else {
-                    purchaseMessages.add(person.getName() + " не может позволить себе " + product.getName() +" ");
+
+                    Product product = null;
+                    for (Product p : products) {
+                        if (p.getName().equals(productName)) {
+                            product = p;
+                            break;
+                        }
+                    }
+                    if (product == null) {
+                        System.out.println("Продукт '" + productName + "' не найден.");
+                        continue;
+                    }
+
+                    if (person.addProduct(product)) {
+                        purchaseMessages.add(person.getName() + " купил " + product.getName() + " ");
+                    } else {
+                        purchaseMessages.add(person.getName() + " не может позволить себе " + product.getName() + " ");
+                    }
+                } else {
+                    System.out.println("Некорректный формат ввода. Используйте 'Имя покупателя Название продукта'.");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Ошибка: Некорректный формат ввода.");
             }
         }
+
+        // Вывод результатов
         System.out.println("\nРезультаты:");
         for (String message : purchaseMessages) {
             System.out.println(message);
         }
         for (Person person : people) {
-            System.out.println(person);}
+            System.out.println(person);
+        }
     }
 }
