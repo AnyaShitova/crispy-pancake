@@ -18,15 +18,19 @@ public class App {
             }
             String[] entries = input.split(";"); // Разделяем строку по точке с запятой
             for (String entry : entries) {
+                entry = entry.trim(); // Убираем лишние пробелы в начале и конце записи
+                if (entry.isEmpty() || entry.equalsIgnoreCase("END")) {
+                    continue; // Пропускаем пустые записи и строку "END"
+                }
                 try {
                     String[] parts = entry.split("=");
                     if (parts.length < 2) {
                         System.out.println("Некорректный формат ввода. Используйте 'Имя=Сумма денег'.");
                         continue;
                     }
-                    // Имя покупателя — это первая часть строки
+                    // Имя покупателя — это первая часть строки (без лишних пробелов)
                     String name = parts[0].trim();
-                    // Сумма денег — это вторая часть строки
+                    // Сумма денег — это вторая часть строки (без лишних пробелов)
                     double money = Double.parseDouble(parts[1].trim());
                     if (money < 0) {
                         System.out.println("Ошибка: Сумма денег не может быть отрицательной. Пожалуйста, введите корректные данные.");
@@ -56,6 +60,10 @@ public class App {
             }
             String[] entries = input.split(";"); // Разделяем строку по точке с запятой
             for (String entry : entries) {
+                entry = entry.trim(); // Убираем лишние пробелы в начале и конце записи
+                if (entry.isEmpty() || entry.equalsIgnoreCase("END")) {
+                    continue; // Пропускаем пустые записи и строку "END"
+                }
                 try {
                     String[] parts = entry.split("=");
                     if (parts.length < 2) {
