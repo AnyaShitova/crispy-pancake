@@ -10,63 +10,69 @@ public class App {
         List<String> purchaseMessages = new ArrayList<>();
 
         // Ввод покупателей
-        System.out.println("Введите покупателей в формате 'Имя=Сумма денег' (для завершения введите END):");
+        System.out.println("Введите покупателей в формате 'Имя=Сумма денег', разделяя их через ; (для завершения введите END):");
         while (true) {
             String input = scanner.nextLine();
             if (input.equalsIgnoreCase("END")) {
                 break;
             }
-            try {
-                String[] parts = input.split("=");
-                if (parts.length < 2) {
-                    System.out.println("Некорректный формат ввода. Используйте 'Имя=Сумма денег'.");
-                    continue;
-                }
-                // Имя покупателя — это первая часть строки
-                String name = parts[0].trim();
-                // Сумма денег — это вторая часть строки
-                double money = Double.parseDouble(parts[1].trim());
-                if (money < 0) {
-                    System.out.println("Ошибка: Сумма денег не может быть отрицательной. Пожалуйста, введите корректные данные.");
-                    continue;
-                }
-                if (name.length() < 3) {
-                    System.out.println("Ошибка: Имя покупателя должно содержать не менее 3 символов. Пожалуйста, введите корректные данные.");
-                    continue;
-                }
+            String[] entries = input.split(";"); // Разделяем строку по точке с запятой
+            for (String entry : entries) {
+                try {
+                    String[] parts = entry.split("=");
+                    if (parts.length < 2) {
+                        System.out.println("Некорректный формат ввода. Используйте 'Имя=Сумма денег'.");
+                        continue;
+                    }
+                    // Имя покупателя — это первая часть строки
+                    String name = parts[0].trim();
+                    // Сумма денег — это вторая часть строки
+                    double money = Double.parseDouble(parts[1].trim());
+                    if (money < 0) {
+                        System.out.println("Ошибка: Сумма денег не может быть отрицательной. Пожалуйста, введите корректные данные.");
+                        continue;
+                    }
+                    if (name.length() < 3) {
+                        System.out.println("Ошибка: Имя покупателя должно содержать не менее 3 символов. Пожалуйста, введите корректные данные.");
+                        continue;
+                    }
 
-                Person person = new Person(name, money);
-                people.add(person);
-            } catch (NumberFormatException e) {
-                System.out.println("Ошибка: Некорректное значение суммы денег.");
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                    Person person = new Person(name, money);
+                    people.add(person);
+                } catch (NumberFormatException e) {
+                    System.out.println("Ошибка: Некорректное значение суммы денег.");
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
 
         // Ввод продуктов
-        System.out.println("Введите продукты в формате 'Название=Стоимость' (для завершения введите END):");
+        System.out.println("Введите продукты в формате 'Название=Стоимость', разделяя их через ; (для завершения введите END):");
         while (true) {
             String input = scanner.nextLine();
             if (input.equalsIgnoreCase("END")) {
                 break;
             }
-            try {
-                String[] parts = input.split("=");
-                if (parts.length < 2) {
-                    System.out.println("Некорректный формат ввода. Используйте 'Название=Стоимость'.");
-                    continue;
+            String[] entries = input.split(";"); // Разделяем строку по точке с запятой
+            for (String entry : entries) {
+                try {
+                    String[] parts = entry.split("=");
+                    if (parts.length < 2) {
+                        System.out.println("Некорректный формат ввода. Используйте 'Название=Стоимость'.");
+                        continue;
+                    }
+
+                    String name = parts[0].trim();
+                    double price = Double.parseDouble(parts[1].trim());
+
+                    Product product = new Product(name, price);
+                    products.add(product);
+                } catch (NumberFormatException e) {
+                    System.out.println("Ошибка: Некорректное значение стоимости продукта.");
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
                 }
-
-                String name = parts[0].trim();
-                double price = Double.parseDouble(parts[1].trim());
-
-                Product product = new Product(name, price);
-                products.add(product);
-            } catch (NumberFormatException e) {
-                System.out.println("Ошибка: Некорректное значение стоимости продукта.");
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
             }
         }
 
